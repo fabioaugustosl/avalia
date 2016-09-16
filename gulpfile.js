@@ -1,6 +1,9 @@
 var gulp = require('gulp');
 var jshint = require('gulp-jshint');
 var nodemon = require('gulp-nodemon');
+var gulpMocha = require('gulp-mocha');
+var env = require('gulp-env');
+var supertest = require('supertest');
 //var jscs = require('gulp-jscs');
 
 var jsFiles = ['*.js','src/**/*.js']; 
@@ -34,6 +37,12 @@ gulp.task('inject',function(){
 		.pipe(wiredep(options))
 		.pipe(inject(injectSrc, injectOptions))
 		.pipe(gulp.dest('./src/views'));
+});
+
+gulp.task('test', function(){
+	env({vars : {ENV: 'Test', PORT : 3000}});
+	gulp.src('./src/tests/*.js', {read: false})
+		.pipe(gulpMocha({reporter: 'nyan'}));
 });
 
 gulp.task('serve', ['style','inject'], function(){

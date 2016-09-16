@@ -2,18 +2,25 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
+var mongoose = require('mongoose');
 
 var app = express();
 
+var db;
+if(process.env.ENV == 'Test'){
+	db = mongoose.connect('mongodb://localhost/db_avalia_tests');
+} else {
+	db = mongoose.connect('mongodb://localhost/db_avalia');
+}
 
-var port = process.env.PORT || 5000;
+var port = process.env.PORT || 3000;
 
 // diretorios publicos
 app.use(express.static('public'));
 
 //middlaware
+app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded());
 app.use(cookieParser());
 app.use(session({secret: 'library'}));
 
@@ -42,4 +49,7 @@ app.get('/', function(req, res){
 app.listen(port, function(err){
 	console.log('running avalia on '+port);
 });
+
+
+module.exports = app;
 
