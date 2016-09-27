@@ -4,7 +4,8 @@ var alunoModel = require('../models/alunoModel');
 
 var alunoRouter = express.Router();
 
-var alunosController = require('../controller/alunosController')(alunoModel);
+var alunosController = require('../controller/AlunosController')(alunoModel);
+
 
 alunoRouter.route('/')
 		.post(function(req, res){
@@ -13,6 +14,7 @@ alunoRouter.route('/')
 		.get(function(req, res){
 			alunosController.listar(req, res);
 		});
+
 
 alunoRouter.use('/:alunoId', function(req, res, next){
 	// esse é nosso middleware
@@ -28,51 +30,19 @@ alunoRouter.use('/:alunoId', function(req, res, next){
 	});
 });
 
+
 alunoRouter.route('/:alunoId')
 		.get(function(req, res){
 			res.json(req.aluno);
 		})
 		.put(function(req, res){
-			
-			req.aluno.nome = req.body.nome;
-			req.aluno.email = req.body.email;
-			req.aluno.celular = req.body.celular;
-
-			req.aluno.save(function(err){
-				if(err){
-					res.status(500).send(err);
-				} else {
-					res.json(req.aluno);
-				}
-			});
+			alunosController.substituir(req, res);
 		})
 		.patch(function(req, res){
-			if(req.body._id){
-				delete req.body._id;
-			}
-
-			for(var p in req.body){
-				req.aluno[p] = req.body[p];	
-			}
-			
-			req.aluno.save(function(err){
-				if(err){
-					res.status(500).send(err);
-				} else {
-					res.json(req.aluno);
-				}
-			});
-	
+			alunosController.atualizar(req, res);
 		})
 		.delete(function(req, res){
-			req.aluno.remove(function(err){
-				if(err){
-					res.status(500).send(err);
-				} else {
-					res.status(204).send('Aluno removido.');
-				}
-			});
-	
+			alunosController.remover(req, res);
 		});
 		
 

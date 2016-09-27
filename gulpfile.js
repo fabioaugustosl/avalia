@@ -45,7 +45,7 @@ gulp.task('test', function(){
 		.pipe(gulpMocha({reporter: 'nyan'}));
 });
 
-gulp.task('serve', ['style','inject'], function(){
+gulp.task('default', ['style'], function(){
 	var options = {
 		script: 'app.js',
 		delayTime: 1,

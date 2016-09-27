@@ -30,15 +30,19 @@ require('./src/config/passport')(app);
 app.set('views','./src/views');
 
 // template engine
-app.set('view engine', 'ejs');
+//app.set('view engine', 'ejs');
 
 
 //rotas
 var usuRouter = require('./src/routes/usuariosRoutes');
 var alunoRouter = require('./src/routes/alunoRoutes');
+var cfcRouter = require('./src/routes/cfcRoutes');
+var avaliadorRouter = require('./src/routes/avaliadorRoutes');
 var authRouter = require('./src/routes/authRoutes');
 app.use('/api/usuarios/v1', usuRouter);
 app.use('/api/alunos/v1', alunoRouter);
+app.use('/api/cfc/v1', cfcRouter);
+app.use('/api/avaliador/v1', avaliadorRouter);
 app.use('/api/auth', authRouter);
 
 app.get('/', function(req, res){
