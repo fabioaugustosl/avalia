@@ -1,10 +1,10 @@
 var express = require('express');
 
-var avaliadorModels = require('../models/avaliadorModels');
+var avaliadorModel = require('../models/avaliadorModel');
 
 var avaliadorautRouter = express.Router();
 
-var avaliadorController = require('../controller/AvaliadorController')(avaliadorModels);
+var avaliadorController = require('../controller/AvaliadorController')(avaliadorModel);
 
 
 avaliadorautRouter.route('/')
