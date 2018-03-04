@@ -35,9 +35,6 @@ cfcRouter.route('/:cfcId')
 		.get(function(req, res){
 			res.json(req.cfc);
 		})
-		.put(function(req, res){
-			cfcController.substituir(req, res);
-		})
 		.patch(function(req, res){
 			cfcController.atualizar(req, res);
 		})

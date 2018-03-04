@@ -20,7 +20,8 @@
     "mongoose": "~4.6.0",
     "should": "~11.1.0",
     "sinon": "~1.17.5",
-    "gulp-mocha": "~3.0.1"
+    "gulp-mocha": "~3.0.1",
+    "moment": "~2.15.1"
   },
   "devDependencies": {
     "gulp": "^3.9.1",

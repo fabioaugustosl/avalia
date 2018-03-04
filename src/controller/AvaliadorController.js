@@ -1,21 +1,29 @@
 var avaliadorController = function(avaliadorModel){
 
-	var validarObrigatoriedade = function(avaliador, res){
-		if(!avaliador.nome){
-			res.status(400);
-			res.send('Nome obrigatório');
-		} 
-	};
+	
 
 	var salvarNovo = function(req, res){
 		var avaliador = new avaliadorModel(req.body);
 
-		validarObrigatoriedade(avaliador, res);
+		var msgObrigatorio = '';
+		if(!avaliador.nome){
+			msgObrigatorio += 'Nome obrigatório.<br/>';
+		} 
+		if(!avaliador.cfc){
+			msgObrigatorio += 'CFC obrigatório.<br/>';
+		} 
+
 		
-		avaliador.save();
+		if(msgObrigatorio != '') {
+			res.status(400);
+			res.send(msgObrigatorio);
+		} else {
 		
-		res.status(201);
-		res.send(avaliador);	
+			avaliador.save();
+		
+			res.status(201);
+			res.send(avaliador);	
+		}
 	};
 	
 	var remover = function(req, res){
@@ -84,6 +92,36 @@ var avaliadorController = function(avaliadorModel){
 			}
 		});
 	};
+
+
+	var autenticar = function(req, res){
+		console.log("chegou no autenticar avaliador");
+		//var email = req.body.email;
+		//var senha = req.body.senha;
+
+		//console.log(email, senha);
+		var query = [];
+
+		query.push({email : req.body.email});
+		query.push({senha :  req.body.senha});
+		
+		var queryFinal = { $and: query };
+		console.log(queryFinal);
+		avaliadorModel.find(queryFinal).exec(function(err, instrutor){
+			if(err){
+				res.status(500).send(err);
+			} else {
+				console.log(instrutor);
+				if(!instrutor && instrutor.length <= 0) {
+					res.status(404).send();
+				} else {
+					res.status(201);
+					res.send(instrutor);	
+				}
+			}
+		});
+	};
+
 
 	return {
 		substituir : substituir,

@@ -1,24 +1,31 @@
 var alunosController = function(alunoModel){
 
-	var validarObrigatoriedade = function(aluno, res){
-		if(!aluno.nome){
-			res.status(400);
-			res.send('Nome obrigatório');
-		} 
-		if(!aluno.login){
-			res.status(400);
-			res.send('Id obrigatório');
-		} 
-	}
 
 	var salvarNovo = function(req, res){
 		var aluno = new alunoModel(req.body);
 
-		validarObrigatoriedade(aluno, res);
+		var msgObrigatorio = '';
 
-		aluno.save();
-		res.status(201);
-		res.send(aluno);	
+		if(!aluno.nome){
+			msgObrigatorio += 'Nome é obrigatório.<br/>';
+		} 
+		if(!aluno.cfc){
+			msgObrigatorio += 'CFC obrigatório.<br/>';
+		}
+		
+		if(msgObrigatorio != '') {
+			res.status(400);
+			res.send(msgObrigatorio);
+		} else {
+
+			if(!aluno.login){
+				aluno.login = Math.floor(Math.random() * (999999 - 0) + 0); // gera um numero aleatório de 6 digitos
+			}
+
+			aluno.save();
+			res.status(201);
+			res.send(aluno);	
+		}
 		
 	};
 
