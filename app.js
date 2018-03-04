@@ -11,7 +11,8 @@ var db;
 if(process.env.ENV == 'Test'){
 	db = mongoose.connect('mongodb://localhost/db_avalia_tests');
 } else {
-	db = mongoose.connect('mongodb://localhost/db_avalia_novo');
+	//db = mongoose.connect('mongodb://localhost/db_avalia_novo');
+    db = mongoose.connect('mongodb://some-mongo/db_avalia_novo');
 }
 
 var port = process.env.PORT || 3000;
