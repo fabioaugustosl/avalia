@@ -124,6 +124,7 @@ var avaliadorController = function(avaliadorModel){
 
 
 	return {
+		autenticar: autenticar,
 		substituir : substituir,
 		atualizar : atualizar,
 		remover : remover,
