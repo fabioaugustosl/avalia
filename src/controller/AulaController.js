@@ -3,9 +3,9 @@ var moment = require('moment');
 var aulaController = function(aulaModel){
 
 	var salvarNovo = function(req, res){
-		
+		console.log('chegou no controller da aula');
 		var aula = new aulaModel(req.body);
-		
+		console.log(aula);
 		if(!req.body.cfc) {
 			res.status(400);
 			res.send('CFC é obrigatório');
