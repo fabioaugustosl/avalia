@@ -9,6 +9,8 @@ var avaliacaoController = function(avaliacaoModel){
 		console.log('body :',req.body);
 		var aluno = req.body.aluno;
 		var exercicio = req.body.exercicio;
+
+		console.log('aluno: ',aluno);
 		//console.log('aluno: ',req.body.aluno);
 		//console.log('exercicio: ', req.body.exercicio);
 		//console.log('avaliacao: ',avaliacao);
@@ -37,7 +39,8 @@ var avaliacaoController = function(avaliacaoModel){
 			res.status(201);
 			console.log('avaliação após salvar', avaliacao);
 			// seta pra retornar.. eh um teste
-			avaliacao.aluno= aluno;
+			console.log('aluno: ',aluno);
+			avaliacao.aluno = aluno;
 			avaliacao.exercicio= exercicio;
 			console.log('avaliação após TESTE ', avaliacao);
 			res.send(avaliacao);	
