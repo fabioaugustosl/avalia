@@ -6,8 +6,11 @@ var avaliacaoController = function(avaliacaoModel){
 		
 		var avaliacao = new avaliacaoModel(req.body);
 		
-		console.log(req.body.aluno);
-		console.log(avaliacao);
+		console.log('body :',req.body);
+		console.log('aluno: ',req.body.aluno);
+		console.log('exercicio: ', req.body.exercicio);
+		console.log('avaliacao: ',avaliacao);
+
 
 		if(!req.body.aluno) {
 			res.status(400);
