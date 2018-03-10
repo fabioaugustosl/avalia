@@ -7,9 +7,9 @@ var avaliacaoController = function(avaliacaoModel){
 		var avaliacao = new avaliacaoModel(req.body);
 		
 		console.log('body :',req.body);
-		console.log('aluno: ',req.body.aluno);
-		console.log('exercicio: ', req.body.exercicio);
-		console.log('avaliacao: ',avaliacao);
+		//console.log('aluno: ',req.body.aluno);
+		//console.log('exercicio: ', req.body.exercicio);
+		//console.log('avaliacao: ',avaliacao);
 
 
 		if(!req.body.aluno) {
@@ -36,7 +36,8 @@ var avaliacaoController = function(avaliacaoModel){
 			console.log('avaliação após salvar', avaliacao);
 			// seta pra retornar.. eh um teste
 			avaliacao.aluno= req.body.aluno;
-
+			avaliacao.exercicio= req.body.exercicio;
+			console.log('avaliação após TESTE ', avaliacao);
 			res.send(avaliacao);	
 		}
 
