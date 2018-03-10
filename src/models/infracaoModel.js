@@ -8,7 +8,6 @@ var infracaoModel = new Schema({
 	aluno : {type: Schema.Types.ObjectId, ref:'Aluno'},
 	loginAluno : {type: String},
 	false : {type: Schema.Types.ObjectId, ref:'Falta'},
-	nota : {type : Number},
 	data: { type: Date, default: Date.now }
 });
 

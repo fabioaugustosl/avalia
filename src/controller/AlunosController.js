@@ -77,26 +77,40 @@ var alunosController = function(alunoModel){
 	};
 
 	var listar = function(req, res){
-		var query = {};
+
+		var query = [];
+
 		if(req.query){
-			query = req.query;
-		}
-		alunoModel.find(query, function(err, alunos){
-			if(err){
-				res.status(500).send(err);
-			} else {
 
-				var returnAlunos = [];
-				alunos.forEach(function(element, index, array){
-					var alunoObj = element.toJSON();
-					alunoObj.links = {};
-					alunoObj.links.self = 'http://'+req.headers.host + '/api/alunos/v1/' + alunoObj._id;
-					returnAlunos.push(alunoObj);
-				});
-
-				res.json(returnAlunos);
+			if(req.query.nome){
+				query.push({nome : RegExp(req.query.nome, "i") });
 			}
-		});
+
+			if(req.query.cfc){
+				query.push({cfc : req.query.cfc});
+			}
+
+			if(req.query.email){
+				query.push({email : RegExp(req.query.email, "i") });
+			}
+
+		}
+		 
+		console.log(query);
+		var queryFinal = {};
+		if(query && query.length > 0){
+			queryFinal = { $and: query };
+		}
+
+		alunoModel.find(queryFinal)
+			.exec(function(err, alunos){
+				if(err){
+					res.status(500).send(err);
+				} else {
+					res.json(alunos);
+				}
+			});
+
 	};
 
 	return {
