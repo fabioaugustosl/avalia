@@ -24,11 +24,19 @@ var avaliacaoController = function(avaliacaoModel){
 		} else {
 
 			avaliacao.data = moment().second(0).millisecond(0).format();
-			avaliacao.loginAluno = req.body.aluno.login;
-			avaliacao.cfc = req.body.aluno.cfc._id;
+			if(!avaliacao.loginAluno) {
+				avaliacao.loginAluno = req.body.aluno.login;
+			}
+			if(!avaliacao.cfc) {
+				avaliacao.cfc = req.body.aluno.cfc._id;
+			}
 
 			avaliacao.save();
 			res.status(201);
+			console.log('avaliação após salvar', avaliacao);
+			// seta pra retornar.. eh um teste
+			avaliacao.aluno= req.body.aluno;
+
 			res.send(avaliacao);	
 		}
 
