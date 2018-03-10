@@ -9,6 +9,8 @@ var aulaController = require('../controller/AulaController')(aulaModel);
 
 aulaRouter.route('/')
 		.post(function(req, res){
+			console.log('chegou no route post de aula');
+			console.log(req.body);
 			aulaController.salvarNovo(req, res);
 		})
 		.get(function(req, res){
