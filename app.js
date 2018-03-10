@@ -53,6 +53,7 @@ var alunoRouter = require('./src/routes/alunoRoutes');
 var cfcRouter = require('./src/routes/cfcRoutes');
 var avaliadorRouter = require('./src/routes/avaliadorRoutes');
 var avaliacaoRouter = require('./src/routes/avaliacaoRoutes');
+var infracaoRouter = require('./src/routes/infracaoRoutes');
 var aulaRouter = require('./src/routes/aulaRoutes');
 var cfcAutenticadorRouter = require('./src/routes/cfcAutenticadorRoutes');
 var instrutorAutenticadorRouter = require('./src/routes/instrutorAutenticadorRoutes');
@@ -67,6 +68,7 @@ app.use('/api/cfcAutenticacao/v1', cfcAutenticadorRouter);
 app.use('/api/instrutorAutenticacao/v1', instrutorAutenticadorRouter);
 app.use('/api/avaliador/v1', avaliadorRouter);
 app.use('/api/avaliacao/v1', avaliacaoRouter);
+app.use('/api/infracao/v1', infracaoRouter);
 app.use('/api/aula/v1', aulaRouter);
 app.use('/api/dashAluno/v1', dashRouter);
 
