@@ -7,9 +7,10 @@ var alunoModel = new Schema({
 	login : {type : String},
 	senha : {type : String},
 	email : {type : String},
-	categoria : {type : String},
+	categoria : {type : String},  //A, B, C, D, E
 	celular : {type : String},
 	dataExame: [{ type: Date }],
+	sexo : {type : String},  // M ou F
 	dataAprovacao: { type: Date }
 });
 

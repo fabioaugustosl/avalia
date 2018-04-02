@@ -10,10 +10,14 @@ var aulaController = function(aulaModel){
 			res.status(400);
 			res.send('CFC é obrigatório');
 		} else {
+			
+			if(!aula.data){
+				aula.data = moment().second(0).millisecond(0).format();
+			}
 			if(!aula.periodo){
 				aula.periodo = 'MANHA';
 			}
-			aula.data = moment().second(0).millisecond(0).format();
+			 
 			aula.save();
 			res.status(201);
 			res.send(aula);	
