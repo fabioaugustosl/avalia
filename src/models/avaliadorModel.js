@@ -1,7 +1,6 @@
 var mongoose = require('mongoose'), Schema = mongoose.Schema;
 
 var avaliadorModel = new Schema({
-	id : {type : String },
 	nome : {type : String},
 	email : {type : String},
 	senha : {type : String},

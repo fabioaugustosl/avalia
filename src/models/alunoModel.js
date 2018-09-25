@@ -1,7 +1,6 @@
 var mongoose = require('mongoose'), Schema = mongoose.Schema;
 
 var alunoModel = new Schema({
-	id : {type : String },
 	nome : {type : String},
 	cfc : {type : String},
 	login : {type : String},

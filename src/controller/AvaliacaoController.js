@@ -11,10 +11,6 @@ var avaliacaoController = function(avaliacaoModel){
 		var exercicio = req.body.exercicio;
 
 		console.log('aluno: ',aluno);
-		//console.log('aluno: ',req.body.aluno);
-		//console.log('exercicio: ', req.body.exercicio);
-		//console.log('avaliacao: ',avaliacao);
-
 
 		if(!req.body.aluno) {
 			res.status(400);

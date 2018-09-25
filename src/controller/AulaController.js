@@ -6,9 +6,24 @@ var aulaController = function(aulaModel){
 		console.log('chegou no controller da aula');
 		var aula = new aulaModel(req.body);
 		console.log(aula);
+
+		var msgObrigatorio = '';
+
 		if(!req.body.cfc) {
+			msgObrigatorio+= 'CFC é obrigatória.<br/>';
+		}
+		
+		if(!req.body.aluno) {
+			msgObrigatorio+= 'O Aluno é obrigatório.<br/>';
+		}
+
+		if(!req.body.instrutor) {
+			msgObrigatorio+= 'O Instrutor é obrigatório.<br/>';
+		}
+
+		if(msgObrigatorio != '') {
 			res.status(400);
-			res.send('CFC é obrigatório');
+			res.send(msgObrigatorio);
 		} else {
 			
 			if(!aula.data){
@@ -34,7 +49,6 @@ var aulaController = function(aulaModel){
 				res.status(204).send('Aula removida.');
 			}
 		});
-	
 	};
 
 
@@ -55,7 +69,6 @@ var aulaController = function(aulaModel){
 			}
 		});
 	};
-
 
 
 	var listar = function(req, res){

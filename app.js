@@ -18,7 +18,7 @@ if(process.env.ENV == 'Test'){
 var port = process.env.PORT || 3000;
 
 // diretorios publicos
-app.use(express.static('public'));
+//app.use(express.static('public'));
 
 //middlaware
 app.use(bodyParser.urlencoded({extended:true}));
@@ -40,11 +40,7 @@ app.use(function (req, res, next) {
 
 require('./src/config/passport')(app);
 
-
 app.set('views','./src/views');
-
-// template engine
-//app.set('view engine', 'ejs');
 
 
 //rotas
@@ -57,7 +53,7 @@ var infracaoRouter = require('./src/routes/infracaoRoutes');
 var aulaRouter = require('./src/routes/aulaRoutes');
 var cfcAutenticadorRouter = require('./src/routes/cfcAutenticadorRoutes');
 var instrutorAutenticadorRouter = require('./src/routes/instrutorAutenticadorRoutes');
-
+var veiculoRouter = require('./src/routes/veiculoRoutes');
 var dashRouter = require('./src/routes/dashRoutes');
 
 //var authRouter = require('./src/routes/authRoutes');
@@ -71,6 +67,7 @@ app.use('/api/avaliacao/v1', avaliacaoRouter);
 app.use('/api/infracao/v1', infracaoRouter);
 app.use('/api/aula/v1', aulaRouter);
 app.use('/api/dashAluno/v1', dashRouter);
+app.use('/api/veiculo/v1', veiculoRouter);
 
 app.get('/', function(req, res){
 	res.render('index');
