@@ -55,6 +55,7 @@ var cfcAutenticadorRouter = require('./src/routes/cfcAutenticadorRoutes');
 var instrutorAutenticadorRouter = require('./src/routes/instrutorAutenticadorRoutes');
 var veiculoRouter = require('./src/routes/veiculoRoutes');
 var dashRouter = require('./src/routes/dashRoutes');
+var dashCfcRouter = require('./src/routes/dashCfcRoutes');
 
 //var authRouter = require('./src/routes/authRoutes');
 app.use('/api/exercicio/v1', exeRouter);
@@ -67,6 +68,7 @@ app.use('/api/avaliacao/v1', avaliacaoRouter);
 app.use('/api/infracao/v1', infracaoRouter);
 app.use('/api/aula/v1', aulaRouter);
 app.use('/api/dashAluno/v1', dashRouter);
+app.use('/api/dashCfc/v1', dashCfcRouter);
 app.use('/api/veiculo/v1', veiculoRouter);
 
 app.get('/', function(req, res){

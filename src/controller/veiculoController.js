@@ -13,10 +13,11 @@ var veiculoController = function(veiculoModel){
 			msgObrigatorio+= 'CFC é obrigatória.<br/>';
 		}
 
-		if(!req.body.nome) {
-			msgObrigatorio+= 'O tipo é obrigatório. (Carro ou moto)<br/>';
+		if(!req.body.placa) {
+			msgObrigatorio+= 'A placa é obrigatória.<br/>';
 		}
 
+		
 		if(msgObrigatorio != '') {
 			res.status(400);
 			res.send(msgObrigatorio);
@@ -77,6 +78,10 @@ var veiculoController = function(veiculoModel){
 
 			if(req.query.anoModelo){
 				query.push({anoModelo : req.query.anoModelo});
+			}
+
+			if(req.query.placa){
+				query.push({placa : RegExp(req.query.placa, "i") });
 			}
 
 			if(req.query.nome){

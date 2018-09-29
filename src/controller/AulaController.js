@@ -79,21 +79,21 @@ var aulaController = function(aulaModel){
 		if(req.query){
 			query = req.query;
 			if(query.data){
-				query.data = moment(query.data, "DD/MM/YYYY").format();
+				query.data = moment(query.data, "DD/MM/YYYY").utc().format();
 				console.log(query.data);
 			}
 			if(query.dataIni && query.dataFim){
 				query.data = {
-                    $gte: moment(query.dataIni, "DD/MM/YYYY").hour(0).minute(0).second(0).millisecond(0).format(),
-                    $lte: moment(query.dataFim, "DD/MM/YYYY").hour(23).minute(59).second(59).millisecond(999).format()
+                    $gte: moment(query.dataIni, "DD/MM/YYYY").hour(0).minute(0).second(0).millisecond(0).utc().format(),
+                    $lte: moment(query.dataFim, "DD/MM/YYYY").hour(23).minute(59).second(59).millisecond(999).utc().format()
                 }
 			} else if(query.dataIni && !query.dataFim){
 				query.data = {
-                    $gte: moment(query.dataIni, "DD/MM/YYYY").hour(0).minute(0).second(0).millisecond(0).format()
+                    $gte: moment(query.dataIni, "DD/MM/YYYY").hour(0).minute(0).second(0).millisecond(0).utc().format()
                 }
 			} else if(!query.dataIni && query.dataFim){
 				query.data = {
-                    $lte: moment(query.dataFim, "DD/MM/YYYY").hour(23).minute(59).second(59).millisecond(999).format()
+                    $lte: moment(query.dataFim, "DD/MM/YYYY").hour(23).minute(59).second(59).millisecond(999).utc().format()
                 }
 			}
 			delete query.dataFim;
@@ -107,22 +107,113 @@ var aulaController = function(aulaModel){
 				if(err){
 					res.status(500).send(err);
 				} else {
-
-				/*	var returnAvaliacoes = [];
-					aulas.forEach(function(element, index, array){
-						var aulaObj = element.toJSON();
-						aulaObj.links = {};
-						aulaObj.links.self = 'http://'+req.headers.host + '/api/aula/v1/' + aulaObj._id;
-						returnAvaliacoes.push(aulaObj);
-					});*/
-
 					res.json(aulas);
 				}
 			});
 	};
 
+
+	var listarAulasAtivas = function(id_cfc, req, res){
+		var query = [];
+		//var dataAgora = moment().utc();
+
+		console.log('AGORA: ',moment().format('MMMM Do YYYY, h:mm:ss a'));
+		console.log('AGORA UTC: ',moment().utc().format('MMMM Do YYYY, h:mm:ss a'));
+		console.log('AGORA INICIO AULA: ',moment().add(-50, "minutes").utc().format('MMMM Do YYYY, h:mm:ss a'));
+		  	
+		//var dataInicioAula =  dataAgora.add(-50, "minutes");
+
+		query.push({data : { $gte: moment().add(-50, "minutes").utc().format(), $lt: moment().utc().format() }});
+		query.push({cfc : id_cfc });
+		
+		var queryFinal = { $and: query };
+		
+		console.log(queryFinal);
+		
+		aulaModel.find(queryFinal)
+			.exec( function(err, aulas){
+				if(err){
+					res.status(500).send(err);
+				} else {
+					res.json(aulas);
+				}
+			});
+	};
+
+
+
+	var listarAulasDoDiaPorInstrutor = function(id_cfc, req, res){
+		var query = [];
+		  	
+		query.push({'data' : { $gt: moment().locale('pt-br').utc().startOf('day').toDate() }});
+		query.push({cfc : id_cfc });
+		
+		var queryFinal = { $and: query };
+		console.log(queryFinal);
+
+		aulaModel.aggregate(
+	    [	
+			{
+	            "$match": queryFinal 
+			},        	
+        	{ "$group": 
+        		{
+					"_id": {instrutor: "$instrutor"},
+	            	"total": {$sum: 1}
+				}	
+			}
+	    ],
+	    function(err,result) {
+	    	console.log(result);
+	    	//res.status(201);
+			res.send(result);
+	    }
+		);
+	};
+
+
+	var listarKmDoDiaPorInstrutor = function(id_cfc, req, res){
+		var query = [];
+		  	
+		query.push({'data' : { $gt: moment().locale('pt-br').utc().startOf('day').toDate() }});
+		query.push({cfc : id_cfc });
+		query.push({ kmInicio: { $ne: null } });
+		query.push({ kmFim: { $ne: null } });
+		
+		
+		var queryFinal = { $and: query };
+		console.log(queryFinal);
+
+		aulaModel.aggregate(
+	    [	
+			{
+	            "$match": queryFinal 
+			},        	
+        	{ "$group": 
+        		{
+					"_id": {instrutor: "$instrutor"}
+					,
+	            	"total": { $sum: { $subtract: [  "$kmFim", "$kmInicio"  ] }  } 
+				}	
+			}
+	    ],
+	    function(err,result) {
+	    	console.log(result);
+	    	//res.status(201);
+			res.send(result);
+	    }
+		);
+	};
+
+
+	
+
+
 	return {
 		listar : listar,
+		listarAulasAtivas : listarAulasAtivas,
+		listarAulasDoDiaPorInstrutor : listarAulasDoDiaPorInstrutor,
+		listarKmDoDiaPorInstrutor : listarKmDoDiaPorInstrutor,
 		atualizar :atualizar,
 		remover : remover,
 		salvarNovo : salvarNovo
