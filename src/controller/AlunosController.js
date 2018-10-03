@@ -94,6 +94,12 @@ var alunosController = function(alunoModel){
 				query.push({email : RegExp(req.query.email, "i") });
 			}
 
+
+			if(req.query.login){
+				query.push({login : req.query.login });
+			}
+
+
 		}
 		 
 		console.log(query);
