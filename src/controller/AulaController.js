@@ -71,6 +71,35 @@ var aulaController = function(aulaModel){
 	};
 
 
+	var finalizar = function(idAula, kmFinal, data, req, res){
+		if(!data){
+			data = moment().second(0).millisecond(0).format();
+		}
+
+		aulaModel.findById(idAula, function(err, aula){
+			if(err){
+				res.status(500).send(err);
+			} else if(aula) {
+				//aula = new aulaModel(aula);
+				//console.log(aula);
+				aula.kmFim = kmFinal;
+				aula.dataFim = data;
+
+				aula.save(function(err){
+					if(err){
+						res.status(500).send(err);
+					} else {
+						res.json(aula);
+					}
+				});
+
+			} else {
+				res.status(404).send('Aula não encontrada');
+			}
+		});
+	};
+
+
 	var listar = function(req, res){
 		var query = {};
 		console.log(moment().format()); 	
@@ -216,7 +245,8 @@ var aulaController = function(aulaModel){
 		listarKmDoDiaPorInstrutor : listarKmDoDiaPorInstrutor,
 		atualizar :atualizar,
 		remover : remover,
-		salvarNovo : salvarNovo
+		salvarNovo : salvarNovo,
+		finalizar : finalizar
 	};
 
 };

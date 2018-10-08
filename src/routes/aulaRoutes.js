@@ -19,17 +19,21 @@ aulaRouter.route('/')
 
 
 aulaRouter.use('/:aulaId', function(req, res, next){
-	// esse é nosso middleware
-	aulaModel.findById(req.params.aulaId, function(err, aula){
-		if(err){
-			res.status(500).send(err);
-		} else if(aula) {
-			req.aula = aula;
-			next();
-		} else {
-			res.status(404).send('Aula não encontrada');
-		}
-	});
+	if("finalizar" == req.params.aulaId){
+		next();
+	} else {
+		// esse é nosso middleware
+		aulaModel.findById(req.params.aulaId, function(err, aula){
+			if(err){
+				res.status(500).send(err);
+			} else if(aula) {
+				req.aula = aula;
+				next();
+			} else {
+				res.status(404).send('Aula não encontrada');
+			}
+		});
+	}
 });
 
 
@@ -44,5 +48,8 @@ aulaRouter.route('/:aulaId')
 			aulaController.remover(req, res);
 		});
 		
+aulaRouter.route('/finalizar/:aulaId').get(function(req, res){
+			aulaController.finalizar(req.params.aulaId, req.query.kmFinal, req.query.data, req, res);
+		});
 
 module.exports = aulaRouter;

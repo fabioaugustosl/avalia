@@ -7,7 +7,8 @@ var aulaModel = new Schema({
 	periodo : {type : String}, // MANHA, TARDE e NOITE
 	kmInicio : {type : Number},
 	kmFim : {type : Number},
-	data: { type: Date, default: Date.now }
+	data: { type: Date, default: Date.now },
+	dataFim: { type: Date }
 });
 
 module.exports = mongoose.model('Aula', aulaModel);
