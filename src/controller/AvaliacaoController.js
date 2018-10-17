@@ -161,7 +161,8 @@ var avaliacaoController = function(avaliacaoModel){
 			{
 	            //"$match": {  "nomeAvaliador" : "Stella" }
 	            //"$match": {  "$aluno": "5a91b95cf2f45e5fc321473b" }
-	           	"$match": {  $and: filtros }
+	           	//"$match": {  $and: filtros }
+	           	"$match": {'loginAluno' : codigoAluno}
 
         	},        	
         	{ "$group": 
