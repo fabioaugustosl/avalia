@@ -3,6 +3,7 @@ var mongoose = require('mongoose'), Schema = mongoose.Schema;
 var Falta = new Schema({
 	id : {type : String },
 	categoria : {type : String},  //A, B, C, D, E
+	tipo : {type : String},  //E (Eliminatoria), G (Grave), M (Média), L (Leve)
 	nome : {type : String}	
 });
 

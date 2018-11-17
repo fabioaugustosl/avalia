@@ -16,17 +16,23 @@ var faltaController = function(faltaModel){
 			msgObrigatorio+= 'Categoria é obrigatório.<br/>';
 		}
 
+		if(!falta.tipo){
+			msgObrigatorio+= 'Tipo é obrigatório.<br/>';
+		}
+
 		if(falta.categoria != 'A' && falta.categoria != 'B' && falta.categoria != 'C' 
 			&& falta.categoria != 'D' && falta.categoria != 'E' ){
 			msgObrigatorio+= 'Categoria deve ser A, B, C, D ou E.<br/>';
 		}
 
+		if(falta.tipo != 'E' && falta.tipo != 'G' && falta.tipo != 'M' && falta.tipo != 'L'  ){
+			msgObrigatorio+= 'Tipo deve ser E (Eliminatoria), G (Grave), M (Média), L (Leve).<br/>';
+		}
 
 		if(msgObrigatorio != '') {
 			res.status(400);
 			res.send(msgObrigatorio);
 		} else {
-
 			falta.save();
 			res.status(201);
 			res.send(falta);	
