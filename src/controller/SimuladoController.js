@@ -157,8 +157,11 @@ var simuladoController = function(simuladoModel){
 			//if(!err && falta){
 				console.log('vai recuperar o simulado e salvar a falta');
 				simuladoModel.findById(idSimulado, function(err, simulado){
+					console.log('chegou no callback do findById ',simulado);
 					if(!err){
 						simulado.faltas.push(falta);
+
+						console.log('vai salvar a falta ', simulado);
 
 						simulado.save(function(err){
 								if(err){
@@ -170,7 +173,7 @@ var simuladoController = function(simuladoModel){
 							});
 						
 					} else {
-						res.status(404).send('regiao não encontrado');
+						res.status(404).send('falta não encontrado');
 					}
 				});				
 				
